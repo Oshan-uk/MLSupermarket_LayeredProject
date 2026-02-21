@@ -1,4 +1,6 @@
 package lk.ijse.mlsupermarket.bo.custom;
 
-public interface ProductBO {
+import lk.ijse.mlsupermarket.bo.SuperBO;
+
+public interface ProductBO extends SuperBO {
 }
