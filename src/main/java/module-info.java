@@ -5,7 +5,7 @@ module lk.ijse.mlsupermarket {
     requires java.sql;
     requires java.desktop;
     requires net.sf.jasperreports.core;
-    requires lk.ijse.mlsupermarket;
+//    requires lk.ijse.mlsupermarket;
 
 
     opens lk.ijse.mlsupermarket.controller to javafx.fxml;

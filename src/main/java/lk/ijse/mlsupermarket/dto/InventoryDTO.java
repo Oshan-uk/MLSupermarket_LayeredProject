@@ -14,6 +14,8 @@ public class InventoryDTO {
 
     private String status;
 
+
+
     public InventoryDTO(String id, String name, String category, int qty, int reorderLevel, String status) {
 
         this.id = id;
@@ -22,6 +24,7 @@ public class InventoryDTO {
         this.qty = qty;
         this.reorderLevel = reorderLevel;
         this.status = status;
+
 
     }
 
@@ -73,10 +76,8 @@ public class InventoryDTO {
 
     }
 
-
     public void setStatus(String status) {
-
         this.status = status;
-
     }
+
 }

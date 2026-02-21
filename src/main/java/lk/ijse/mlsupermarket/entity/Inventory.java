@@ -7,16 +7,16 @@ public class Inventory {
     private String category;
     private int qty;
     private int reorderLevel;
-    private String status;
 
-    public Inventory(String id, String name, String category, int qty, int reorderLevel, String status) {
+
+    public Inventory(String id, String name, String category, int qty, int reorderLevel) {
 
         this.id = id;
         this.name = name;
         this.category = category;
         this.qty = qty;
         this.reorderLevel = reorderLevel;
-        this.status = status;
+
 
     }
 
@@ -55,11 +55,7 @@ public class Inventory {
     }
 
 
-    public String getStatus() {
 
-        return status;
-
-    }
 
 
     public void setQty(int qty) {
@@ -69,9 +65,5 @@ public class Inventory {
     }
 
 
-    public void setStatus(String status) {
 
-        this.status = status;
-
-    }
 }
