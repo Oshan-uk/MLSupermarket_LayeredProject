@@ -100,9 +100,6 @@ public class CustomerViewController {
 
     }
 
-
-
-
     @FXML
     private void handleSearchCustomer(KeyEvent event) {
 
