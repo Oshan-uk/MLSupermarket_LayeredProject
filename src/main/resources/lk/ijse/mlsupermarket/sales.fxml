@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.mlsupermarket.controller.SalesController">
+   <children>
+      <ImageView fitHeight="513.0" fitWidth="901.0" layoutX="-1.0" layoutY="40.0" opacity="0.47" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/360_F_1312750979_G4O76wokbMxV3E1UvvpnKNTInSXtVxVY.jpg" />
+         </image>
+      </ImageView>
+      <HBox alignment="CENTER" prefHeight="39.0" prefWidth="901.0" style="-fx-background-color: #0712eb;">
+         <children>
+            <Label text="SALES VIEW" textFill="#f8f4f4">
+               <font>
+                  <Font name="Arial Black" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <ImageView fitHeight="513.0" fitWidth="901.0" layoutY="92.0" opacity="0.38" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/360_F_1312750979_G4O76wokbMxV3E1UvvpnKNTInSXtVxVY.jpg" />
+         </image>
+      </ImageView>
+      <VBox prefHeight="200.0" prefWidth="100.0" />
+      <VBox layoutX="4.0" layoutY="43.0" prefHeight="108.0" prefWidth="443.0" style="-fx-background-color: #f7d5f1;" />
+      <VBox layoutX="10.0" layoutY="52.0" prefHeight="45.0" prefWidth="423.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Sales ID" />
+            <TextField fx:id="saleId" prefHeight="25.0" prefWidth="414.0">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <VBox layoutX="10.0" layoutY="96.0" prefHeight="45.0" prefWidth="423.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="30.0" style="-fx-background-color: #77f7ed;" text="Date" />
+            <TextField fx:id="date">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <VBox layoutX="3.0" layoutY="155.0" prefHeight="150.0" prefWidth="443.0" style="-fx-background-color: #d5f7f0;" />
+      <VBox layoutX="10.0" layoutY="160.0" prefHeight="45.0" prefWidth="422.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Customer ID" />
+            <TextField fx:id="txtCustomerId" onKeyPressed="#handleCustomerSearch">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <VBox layoutX="11.0" layoutY="204.0" prefHeight="45.0" prefWidth="422.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Name" />
+            <TextField fx:id="txtCustomerName">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <VBox layoutX="11.0" layoutY="248.0" prefHeight="45.0" prefWidth="422.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Contact" />
+            <TextField fx:id="txtCustomerContact">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <VBox layoutX="498.0" layoutY="43.0" prefHeight="283.0" prefWidth="398.0" style="-fx-background-color: #f5ccc6;" />
+      <VBox layoutX="519.0" layoutY="52.0" prefHeight="45.0" prefWidth="363.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Product ID" />
+            <TextField fx:id="txtProductId" onKeyPressed="#handleProductSearch">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <VBox layoutX="520.0" layoutY="99.0" prefHeight="45.0" prefWidth="363.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Name" />
+            <ComboBox fx:id="cmbProduct" opacity="0.81" prefHeight="25.0" prefWidth="367.0" promptText="Select the Product Name">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect>
+            </ComboBox>
+         </children>
+      </VBox>
+      <VBox layoutX="521.0" layoutY="147.0" prefHeight="45.0" prefWidth="363.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Unit Price" />
+            <TextField fx:id="txtUnitPrice">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <VBox layoutX="522.0" layoutY="198.0" prefHeight="45.0" prefWidth="363.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Available" />
+            <TextField fx:id="txtAvailable">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <VBox layoutX="523.0" layoutY="246.0" prefHeight="45.0" prefWidth="363.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Quantity" />
+            <TextField fx:id="txtQty">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <Button layoutX="770.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleAddItem" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #0af722;" text="Add Item to Cart">
+         <effect>
+            <DropShadow height="11.0" radius="5.0" width="11.0" />
+         </effect></Button>
+      <HBox layoutX="444.0" layoutY="328.0" prefHeight="166.0" prefWidth="452.0">
+         <children>
+            <TableView fx:id="tblItems" onMouseClicked="#handleCartItemClick" prefHeight="166.0" prefWidth="557.0">
+              <columns>
+                <TableColumn fx:id="colPid" prefWidth="70.0" text="Product ID" />
+                <TableColumn fx:id="colPName" prefWidth="99.0" text="Product Name" />
+                  <TableColumn fx:id="colQty" minWidth="0.0" prefWidth="65.0" text="Quantity" />
+                  <TableColumn fx:id="colUnit" minWidth="0.0" prefWidth="67.0" text="Unit Price" />
+                  <TableColumn fx:id="colLineTotal" minWidth="0.0" prefWidth="68.0" text="Total" />
+                  <TableColumn fx:id="colRemove" prefWidth="81.0" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+      <VBox alignment="CENTER" layoutX="309.0" layoutY="497.0" prefHeight="42.0" prefWidth="204.0">
+         <children>
+            <Label style="-fx-background-color: #77f7ed;" text="Grand Total" textAlignment="CENTER" />
+            <TextField fx:id="grandTotal" prefHeight="25.0" prefWidth="414.0">
+               <effect>
+                  <DropShadow height="11.0" radius="5.0" width="11.0" />
+               </effect></TextField>
+         </children>
+      </VBox>
+      <Button layoutX="563.0" layoutY="564.0" mnemonicParsing="false" onAction="#handleConfirmSale" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #28ad2a;" text="Confirm" textFill="#f2efef">
+         <effect>
+            <DropShadow height="11.0" radius="5.0" width="11.0" />
+         </effect>
+      </Button>
+      <Button layoutX="783.0" layoutY="563.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #f3fc88;" text="Refresh">
+         <effect>
+            <DropShadow height="11.0" radius="5.0" width="11.0" />
+         </effect>
+      </Button>
+      <Button layoutX="30.0" layoutY="564.0" mnemonicParsing="false" onAction="#handleDashboard" prefHeight="25.0" prefWidth="86.0" style="-fx-background-color: #f72e0a;" text="Home" textFill="#f5f0f0">
+         <effect>
+            <DropShadow height="11.0" radius="2.5" width="1.0" />
+         </effect></Button>
+      <Button layoutX="168.0" layoutY="564.0" mnemonicParsing="false" onAction="#openCustomer" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #0712eb;" text="Customer View" textFill="WHITE">
+         <effect>
+            <Glow>
+               <input>
+                  <DropShadow />
+               </input>
+            </Glow>
+         </effect>
+      </Button>
+      <Button fx:id="btnPrint" layoutX="659.0" layoutY="563.0" mnemonicParsing="false" onAction="#handlePrintReport" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: orange;" text="Print">
+         <effect>
+            <Glow level="0.12">
+               <input>
+                  <DropShadow height="10.0" radius="3.585" width="6.34" />
+               </input>
+            </Glow>
+         </effect>
+      </Button>
+      <TableView fx:id="tblSalesView" layoutX="3.0" layoutY="328.0" prefHeight="166.0" prefWidth="416.0">
+        <columns>
+          <TableColumn fx:id="colSVSaleId" prefWidth="59.0" text="Sale ID" />
+          <TableColumn fx:id="colSVProductId" prefWidth="104.0" text="Product ID" />
+            <TableColumn fx:id="colSVQty" prefWidth="73.0" text="Quantity" />
+            <TableColumn fx:id="colSVUnitPrice" prefWidth="83.0" text="Unit Price" />
+            <TableColumn fx:id="colSVTotal" prefWidth="97.0" text="Total Amount" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
