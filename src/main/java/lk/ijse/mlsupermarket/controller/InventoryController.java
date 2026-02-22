@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.mlsupermarket.App;
+import lk.ijse.mlsupermarket.bo.BOFactory;
+import lk.ijse.mlsupermarket.bo.custom.InventoryBO;
 import lk.ijse.mlsupermarket.dto.InventoryDTO;
 import lk.ijse.mlsupermarket.model.InventoryModel;
 import lk.ijse.mlsupermarket.model.SalesModel;
@@ -50,8 +52,9 @@ public class InventoryController {
 
     private final SalesModel salesModel = new SalesModel();
 
-    private final InventoryModel inventoryModel = new InventoryModel();
-
+    private final InventoryBO inventoryBO =
+            (InventoryBO) BOFactory.getInstance()
+                    .getBO(BOFactory.BOTypes.INVENTORY);
 
 
     @FXML
@@ -77,7 +80,7 @@ public class InventoryController {
 
     private void loadInventory() {
         try {
-            List<InventoryDTO> list = inventoryModel.getAllInventory();
+            List<InventoryDTO> list = inventoryBO.getAllInventory();
             tblInventory.setItems(FXCollections.observableArrayList(list));
             loadAlerts();
         } catch (Exception e) {
@@ -161,7 +164,7 @@ public class InventoryController {
         try {
             String selected = cmbFilterCategory.getValue();
             List<InventoryDTO> list = (selected == null) ?
-                    inventoryModel.getAllInventory() : inventoryModel.getInventoryByCategory(selected);
+                    inventoryBO.getAllInventory() : inventoryBO.getInventoryByCategory(selected);
             tblInventory.setItems(FXCollections.observableArrayList(list));
             loadAlerts();
         } catch (Exception e) {
@@ -183,7 +186,7 @@ public class InventoryController {
     @FXML
     void handlePrintReport(ActionEvent event) {
         try {
-            inventoryModel.printStockReport();
+            inventoryBO.printStockReport();
         } catch (SQLException | JRException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (Exception e) {
