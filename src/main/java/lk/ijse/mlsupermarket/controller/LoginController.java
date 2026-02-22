@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import lk.ijse.mlsupermarket.App;
+import lk.ijse.mlsupermarket.bo.BOFactory;
+import lk.ijse.mlsupermarket.bo.custom.UserBO;
 import lk.ijse.mlsupermarket.db.DBConnection;
 
 import java.io.IOException;
@@ -22,6 +24,10 @@ public class LoginController {
 
     @FXML
     private ComboBox<String> roleCombo;
+
+    private final UserBO userBO =
+            (UserBO) BOFactory.getInstance()
+                    .getBO(BOFactory.BOTypes.USER);
 
     @FXML
     public void initialize() {
@@ -47,46 +53,25 @@ public class LoginController {
         }
 
         try {
-            Connection conn = DBConnection.getInstance().getConnection();
 
-            String sqlUser = "SELECT * FROM user WHERE username=?";
-            PreparedStatement psUser = conn.prepareStatement(sqlUser);
-            psUser.setString(1, username);
-            ResultSet rsUser = psUser.executeQuery();
+            int result = userBO.authenticate(username, password, role);
 
-            if (!rsUser.next()) {
-                new Alert(Alert.AlertType.ERROR, "Username does not exist!").show();
-                return;
+            switch (result) {
+                case 1:
+                    new Alert(Alert.AlertType.ERROR, "Username does not exist!").show();
+                    return;
+                case 2:
+                    new Alert(Alert.AlertType.ERROR, "Incorrect password!").show();
+                    return;
+                case 3:
+                    new Alert(Alert.AlertType.ERROR, "Incorrect role selected!").show();
+                    return;
+                case 4:
+                    App.loggedUsername = username;
+                    App.loggedUserRole = role;
+                    new Alert(Alert.AlertType.INFORMATION, "Login Successful!").show();
+                    App.setRoot("dashboard");
             }
-
-            String sqlPass = "SELECT * FROM user WHERE username=? AND password=MD5(?)";
-            PreparedStatement psPass = conn.prepareStatement(sqlPass);
-            psPass.setString(1, username);
-            psPass.setString(2, password);
-            ResultSet rsPass = psPass.executeQuery();
-
-            if (!rsPass.next()) {
-                new Alert(Alert.AlertType.ERROR, "Incorrect password!").show();
-                return;
-            }
-
-            String sqlRole = "SELECT * FROM user WHERE username=? AND password=MD5(?) AND role=?";
-            PreparedStatement psRole = conn.prepareStatement(sqlRole);
-            psRole.setString(1, username);
-            psRole.setString(2, password);
-            psRole.setString(3, role);
-            ResultSet rs = psRole.executeQuery();
-
-            if (!rs.next()) {
-                new Alert(Alert.AlertType.ERROR, "Incorrect role selected!").show();
-                return;
-            }
-
-            App.loggedUsername = username;
-            App.loggedUserRole = role;
-
-            new Alert(Alert.AlertType.INFORMATION, "Login Successful!").show();
-            App.setRoot("dashboard");
 
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();

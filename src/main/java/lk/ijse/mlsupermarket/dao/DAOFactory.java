@@ -18,6 +18,7 @@ public class DAOFactory {
         SALES,
         SALE_ITEM,
         SUPPLIER,
+        USER,
         QUERY
     }
 
@@ -35,6 +36,8 @@ public class DAOFactory {
                 return new SalesItemDAOImpl();
             case SUPPLIER:
                 return new SupplierDAOImpl();
+            case USER:
+                return new UserDAOImpl();
             case QUERY:
                 return new QueryDAOImpl();
             default:

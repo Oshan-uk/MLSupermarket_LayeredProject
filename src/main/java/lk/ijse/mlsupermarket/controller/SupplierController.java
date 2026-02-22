@@ -8,6 +8,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.mlsupermarket.App;
+import lk.ijse.mlsupermarket.bo.BOFactory;
+import lk.ijse.mlsupermarket.bo.custom.SupplierBO;
 import lk.ijse.mlsupermarket.dto.SupplierDTO;
 import lk.ijse.mlsupermarket.model.SupplierModel;
 
@@ -45,8 +47,9 @@ public class SupplierController {
     private final String SUPPLIER_CONTACT_REGEX = "^[0-9]{10,15}$";
 
 
-    private final SupplierModel supplierModel = new SupplierModel();
-
+    private final SupplierBO supplierBO =
+            (SupplierBO) BOFactory.getInstance()
+                    .getBO(BOFactory.BOTypes.SUPPLIER);
     @FXML
     public void initialize() {
         colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
@@ -56,7 +59,7 @@ public class SupplierController {
         loadSupplierTable();
 
         try {
-            supplierIdField.setText(supplierModel.generateNextSupplierId());
+            supplierIdField.setText(supplierBO.generateNextSupplierId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,7 +85,7 @@ public class SupplierController {
 
                 SupplierDTO supplier = new SupplierDTO(supplierIdField.getText().trim(), name, contact);
 
-                boolean result = supplierModel.saveSupplier(supplier);
+                boolean result = supplierBO.saveSupplier(supplier);
 
                 if (result) {
 
@@ -90,7 +93,7 @@ public class SupplierController {
 
                     cleanFields();
                     loadSupplierTable();
-                    supplierIdField.setText(supplierModel.generateNextSupplierId());
+                    supplierIdField.setText(supplierBO.generateNextSupplierId());
 
 
                 } else {
@@ -121,7 +124,7 @@ public class SupplierController {
 
                 } else {
 
-                    SupplierDTO supplier = supplierModel.searchSupplier(id);
+                    SupplierDTO supplier = supplierBO.searchSupplier(id);
 
                     if (supplier != null) {
 
@@ -169,7 +172,7 @@ public class SupplierController {
 
                 SupplierDTO supplier = new SupplierDTO(id, name, contact);
 
-                boolean result = supplierModel.updateSupplier(supplier);
+                boolean result = supplierBO.updateSupplier(supplier);
 
                 if (result) {
 
@@ -179,7 +182,7 @@ public class SupplierController {
                     loadSupplierTable();
 
                     try {
-                        supplierIdField.setText(supplierModel.generateNextSupplierId());
+                        supplierIdField.setText(supplierBO.generateNextSupplierId());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -211,7 +214,7 @@ public class SupplierController {
 
             } else {
 
-                boolean result = supplierModel.deleteSupplier(id);
+                boolean result = supplierBO.deleteSupplier(id);
 
                 if (result) {
 
@@ -221,7 +224,7 @@ public class SupplierController {
                     loadSupplierTable();
 
                     try {
-                        supplierIdField.setText(supplierModel.generateNextSupplierId());
+                        supplierIdField.setText(supplierBO.generateNextSupplierId());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -246,7 +249,7 @@ public class SupplierController {
         cleanFields();
 
         try {
-            supplierIdField.setText(supplierModel.generateNextSupplierId());
+            supplierIdField.setText(supplierBO.generateNextSupplierId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -262,7 +265,7 @@ public class SupplierController {
     private void loadSupplierTable() {
         try {
 
-            List<SupplierDTO> supplierList = supplierModel.getSuppliers();
+            List<SupplierDTO> supplierList = supplierBO.getAllSuppliers();
 
             ObservableList<SupplierDTO> obList = FXCollections.observableArrayList();
 

@@ -25,6 +25,7 @@ public class BOFactory {
         INVENTORY,
         PRODUCT,
         SALES,
+        USER,
         SUPPLIER
     }
 
@@ -43,6 +44,9 @@ public class BOFactory {
 
             case SALES:
                 return new SalesBOImpl();
+
+            case USER:
+                return new UserBOImpl();
 
             case SUPPLIER:
                 return new SupplierBOImpl();
