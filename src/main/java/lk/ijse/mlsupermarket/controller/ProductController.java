@@ -8,6 +8,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.mlsupermarket.App;
+import lk.ijse.mlsupermarket.bo.BOFactory;
+import lk.ijse.mlsupermarket.bo.custom.ProductBO;
 import lk.ijse.mlsupermarket.dto.CustomerDTO;
 import lk.ijse.mlsupermarket.dto.ProductDTO;
 import lk.ijse.mlsupermarket.model.ProductModel;
@@ -61,7 +63,10 @@ public class ProductController {
     @FXML
     private TableColumn<ProductDTO, Double> colPrice;
 
-    private final ProductModel productModel = new ProductModel();
+
+    private final ProductBO productBO =
+            (ProductBO) BOFactory.getInstance()
+                    .getBO(BOFactory.BOTypes.PRODUCT);
 
     @FXML
     public void initialize() {
@@ -80,7 +85,7 @@ public class ProductController {
         loadProductTable();
 
         try {
-            txtProductId.setText(productModel.generateNextProductId());
+            txtProductId.setText(productBO.generateNextProductId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,7 +101,7 @@ public class ProductController {
 
             ProductDTO product = new ProductDTO(txtProductId.getText().trim(), txtSupplierId.getText().trim(), txtProductName.getText().trim(), cmbCategory.getValue(), Integer.parseInt(txtQty.getText().trim()), Integer.parseInt(txtReorderLevel.getText().trim()), Double.parseDouble(txtPrice.getText().trim()));
 
-            boolean result = productModel.saveProduct(product);
+            boolean result = productBO.saveProduct(product);
 
             if (result) {
 
@@ -104,7 +109,7 @@ public class ProductController {
 
                 cleanFields();
                 loadProductTable();
-                txtProductId.setText(productModel.generateNextProductId());
+                txtProductId.setText(productBO.generateNextProductId());
 
 
             } else {
@@ -126,7 +131,7 @@ public class ProductController {
 
             ProductDTO product = new ProductDTO(txtProductId.getText().trim(), txtProductName.getText().trim(), cmbCategory.getValue(), Integer.parseInt(txtQty.getText().trim()), Integer.parseInt(txtReorderLevel.getText().trim()), Double.parseDouble(txtPrice.getText().trim()), txtSupplierId.getText().trim());
 
-            boolean result = productModel.updateProduct(product);
+            boolean result = productBO.updateProduct(product);
 
             if (result) {
 
@@ -136,7 +141,7 @@ public class ProductController {
                 loadProductTable();
 
                 try {
-                    txtProductId.setText(productModel.generateNextProductId());
+                    txtProductId.setText(productBO.generateNextProductId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -161,7 +166,7 @@ public class ProductController {
 
             String id = txtProductId.getText().trim();
 
-            boolean result = productModel.deleteProduct(id);
+            boolean result = productBO.deleteProduct(id);
 
             if (result) {
 
@@ -171,7 +176,7 @@ public class ProductController {
                 loadProductTable();
 
                 try {
-                    txtProductId.setText(productModel.generateNextProductId());
+                    txtProductId.setText(productBO.generateNextProductId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -194,7 +199,7 @@ public class ProductController {
         cleanFields();
 
         try {
-            txtProductId.setText(productModel.generateNextProductId());
+            txtProductId.setText(productBO.generateNextProductId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -215,7 +220,7 @@ public class ProductController {
     private void loadProductTable() {
         try {
 
-            List<ProductDTO> productList = productModel.getProducts();
+            List<ProductDTO> productList = productBO.getAllProducts();
 
             ObservableList<ProductDTO> obList = FXCollections.observableArrayList();
 
