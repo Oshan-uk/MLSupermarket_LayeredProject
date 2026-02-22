@@ -60,9 +60,10 @@ public class SalesController {
             (CustomerBO) BOFactory.getInstance().
                     getBO(BOFactory.BOTypes.CUSTOMER);
 
-    private SalesBO salesBO =
+    private final SalesBO salesBO =
             (SalesBO) BOFactory.getInstance()
                     .getBO(BOFactory.BOTypes.SALES);
+
     private final ObservableList<SaleItemDTO> cartList = FXCollections.observableArrayList();
 
     @FXML

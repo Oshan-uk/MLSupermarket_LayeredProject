@@ -32,14 +32,12 @@ public class DAOFactory {
                 return new InventoryDAOImpl();
             case SALES:
                 return new SalesDAOImpl();
-            case SALE_ITEM:
-                return new SalesItemDAOImpl();
             case SUPPLIER:
                 return new SupplierDAOImpl();
             case USER:
                 return new UserDAOImpl();
-            case QUERY:
-                return new QueryDAOImpl();
+//            case QUERY:
+//                return new QueryDAOImpl();
             default:
                 return null;
         }
