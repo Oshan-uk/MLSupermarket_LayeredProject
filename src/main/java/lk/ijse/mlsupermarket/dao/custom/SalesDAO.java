@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface SalesDAO extends CrudDAO<Sales> {
 
-
-    String getLastSaleId() throws Exception;
-    List<String> getAllSaleIds() throws Exception;
+    String generateNextId() throws Exception;
 }

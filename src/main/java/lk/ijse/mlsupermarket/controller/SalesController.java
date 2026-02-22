@@ -8,6 +8,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.mlsupermarket.App;
+import lk.ijse.mlsupermarket.bo.BOFactory;
+import lk.ijse.mlsupermarket.bo.custom.CustomerBO;
+import lk.ijse.mlsupermarket.bo.custom.ProductBO;
+import lk.ijse.mlsupermarket.bo.custom.SalesBO;
 import lk.ijse.mlsupermarket.dto.*;
 import lk.ijse.mlsupermarket.model.CustomerModel;
 import lk.ijse.mlsupermarket.model.ProductModel;
@@ -48,10 +52,17 @@ public class SalesController {
     @FXML private TableColumn<SaleItemDTO, Double> colSVUnitPrice;
     @FXML private TableColumn<SaleItemDTO, Double> colSVTotal;
 
-    private final ProductModel productModel = new ProductModel();
-    private final CustomerModel customerModel = new CustomerModel();
-    private final SalesModel salesModel = new SalesModel();
+    private final ProductBO productBO =
+            (ProductBO) BOFactory.getInstance()
+                    .getBO(BOFactory.BOTypes.PRODUCT);
 
+    private final CustomerBO customerBO =
+            (CustomerBO) BOFactory.getInstance().
+                    getBO(BOFactory.BOTypes.CUSTOMER);
+
+    private SalesBO salesBO =
+            (SalesBO) BOFactory.getInstance()
+                    .getBO(BOFactory.BOTypes.SALES);
     private final ObservableList<SaleItemDTO> cartList = FXCollections.observableArrayList();
 
     @FXML
@@ -74,8 +85,8 @@ public class SalesController {
         date.setText(LocalDate.now().toString());
 
         try {
-            saleId.setText(salesModel.generateNextSaleId());
-            cmbProduct.setItems(FXCollections.observableArrayList(productModel.getProducts()));
+            saleId.setText(salesBO.generateNextSaleId());
+            cmbProduct.setItems(FXCollections.observableArrayList(productBO.getAllProducts()));
             loadSalesViewTable();
             refreshSalesTable();
         } catch (Exception e) {
@@ -116,7 +127,7 @@ public class SalesController {
             if (txtQty.getText().isEmpty()) return;
 
             int qty = Integer.parseInt(txtQty.getText());
-            ProductDTO p = productModel.searchProduct(txtProductId.getText());
+            ProductDTO p = productBO.searchProduct(txtProductId.getText());
 
             if (p == null) {
                 new Alert(Alert.AlertType.ERROR, "Product not found!").show();
@@ -173,12 +184,12 @@ public class SalesController {
 
             List<SaleItemDTO> items = new ArrayList<>(cartList);
 
-            if (salesModel.saveSale(sale, items)) {
+            if (salesBO.saveSale(sale, items)) {
                 new Alert(Alert.AlertType.INFORMATION, "Sale successfully completed!").show();
 
                 cartList.clear();
                 updateTotal();
-                saleId.setText(salesModel.generateNextSaleId());
+                saleId.setText(salesBO.generateNextSaleId());
                 loadSalesViewTable();
                 clearAllFields();
             } else {
@@ -225,7 +236,7 @@ public class SalesController {
 
     private void loadSalesViewTable() {
         try {
-            tblSalesView.setItems(FXCollections.observableArrayList(salesModel.getAllSalesItems()));
+            tblSalesView.setItems(FXCollections.observableArrayList(salesBO.getAllSalesItems()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -248,7 +259,7 @@ public class SalesController {
                 return;
             }
 
-            CustomerDTO customer = customerModel.searchCustomer(id);
+            CustomerDTO customer = customerBO.searchCustomer(id);
 
             if (customer != null) {
                 txtCustomerName.setText(customer.getName());
@@ -279,7 +290,7 @@ public class SalesController {
         }
 
         try {
-            ProductDTO product = productModel.searchProduct(id);
+            ProductDTO product = productBO.searchProduct(id);
 
             if (product != null) {
                 cmbProduct.getSelectionModel().select(product);
@@ -318,7 +329,7 @@ public class SalesController {
     @FXML
     void handlePrintReport(javafx.event.ActionEvent event) {
         try {
-            salesModel.printStockReport();
+            salesBO.printStockReport();
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to generate report: " + e.getMessage()).show();
