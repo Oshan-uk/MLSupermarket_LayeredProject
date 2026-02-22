@@ -13,33 +13,44 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class CustomerDAOImpl implements CustomerDAO {
 
-    public boolean save(Customer entity) throws SQLException {
-        return CrudUtil.execute("INSERT INTO customer (customer_id, name, contact_no) VALUES (?,?,?)",
-                entity.getId(),
-                entity.getName(),
-                entity.getContactNo()
+    @Override
+    public boolean save(Customer customer) throws Exception {
+        return CrudUtil.execute(
+                "INSERT INTO customer VALUES (?,?,?)",
+                customer.getId(),
+                customer.getName(),
+                customer.getContactNo()
         );
     }
 
-    public boolean update(Customer entity) throws SQLException {
-        return CrudUtil.execute("UPDATE customer SET name=?, contact_no=? WHERE customer_id=?",
-                entity.getName(),
-                entity.getContactNo(),
-                entity.getId()
+    @Override
+    public boolean update(Customer customer) throws Exception {
+        return CrudUtil.execute(
+                "UPDATE customer SET name=?, contact_no=? WHERE customer_id=?",
+                customer.getName(),
+                customer.getContactNo(),
+                customer.getId()
         );
     }
 
-    public boolean delete(String id) throws SQLException {
-
-        return CrudUtil.execute("DELETE FROM customer WHERE customer_id=?", id);
-
+    @Override
+    public boolean delete(String id) throws Exception {
+        return CrudUtil.execute(
+                "DELETE FROM customer WHERE customer_id=?",
+                id
+        );
     }
 
-    public Customer search(String id) throws SQLException {
-
-        ResultSet rs = CrudUtil.execute("SELECT * FROM customer WHERE customer_id=?", id);
+    @Override
+    public Customer search(String id) throws Exception {
+        ResultSet rs = CrudUtil.execute(
+                "SELECT * FROM customer WHERE customer_id=?",
+                id
+        );
 
         if (rs.next()) {
             return new Customer(
@@ -51,31 +62,33 @@ public class CustomerDAOImpl implements CustomerDAO {
         return null;
     }
 
-    public ArrayList<Customer> getAll() throws SQLException {
+    @Override
+    public List<Customer> getAll() throws Exception {
+        ResultSet rs = CrudUtil.execute(
+                "SELECT * FROM customer ORDER BY CAST(SUBSTRING(customer_id, 2) AS UNSIGNED) DESC"
+        );
 
-        ResultSet rs = CrudUtil.execute("SELECT * FROM customer ORDER BY CAST(SUBSTRING(customer_id, 2) AS UNSIGNED) DESC");
-        ArrayList<Customer> customers = new ArrayList<>();
+        List<Customer> list = new ArrayList<>();
 
         while (rs.next()) {
-            String id = rs.getString("customer_id");
-            String name = rs.getString("name");
-            String contactNo = rs.getString("contact_no");
-
-            Customer entity = new Customer(id, name, contactNo);
-            customers.add(entity);
-
+            list.add(new Customer(
+                    rs.getString("customer_id"),
+                    rs.getString("name"),
+                    rs.getString("contact_no")
+            ));
         }
 
-        return customers;
+        return list;
     }
 
-    public String generateId() throws Exception {
+    @Override
+    public String generateNextId() throws Exception {
+        ResultSet rs = CrudUtil.execute(
+                "SELECT customer_id FROM customer ORDER BY CAST(SUBSTRING(customer_id, 2) AS UNSIGNED) DESC LIMIT 1"
+        );
 
-        ResultSet rst =  CrudUtil.execute("SELECT customer_id FROM customer ORDER BY CAST(SUBSTRING(customer_id, 2) AS UNSIGNED) DESC LIMIT 1");
-
-
-        if (rst.next()) {
-            String lastId = rst.getString("customer_id");
+        if (rs.next()) {
+            String lastId = rs.getString(1);
             int num = Integer.parseInt(lastId.substring(1));
             return "C" + (num + 1);
         }

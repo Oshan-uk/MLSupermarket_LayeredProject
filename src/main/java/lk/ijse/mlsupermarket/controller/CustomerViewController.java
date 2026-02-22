@@ -9,6 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.mlsupermarket.App;
+import lk.ijse.mlsupermarket.bo.BOFactory;
+import lk.ijse.mlsupermarket.bo.custom.CustomerBO;
 import lk.ijse.mlsupermarket.db.DBConnection;
 import lk.ijse.mlsupermarket.dto.CustomerDTO;
 import lk.ijse.mlsupermarket.model.CustomerModel;
@@ -45,8 +47,7 @@ public class CustomerViewController {
     private final String CUSTOMER_NAME_REGEX = "^[A-Za-z]{3,}(\\s[A-Za-z]{3,})?$";
     private final String CUSTOMER_CONTACT_REGEX = "^[0-9]{10,15}$";
 
-    private final CustomerModel customerModel = new CustomerModel();
-
+    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER);
     @FXML
     public void initialize() {
 
@@ -57,7 +58,7 @@ public class CustomerViewController {
         loadCustomerTable();
 
         try {
-            idField.setText(customerModel.generateNextCustomerId());
+            idField.setText(customerBO.generateNextCustomerId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,13 +79,13 @@ public class CustomerViewController {
         } else {
             try {
                 CustomerDTO customer = new CustomerDTO(idField.getText().trim(), name, contact);
-                boolean result = customerModel.saveCustomer(customer);
+                boolean result = customerBO.saveCustomer(customer);
 
                 if (result) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
                     cleanFields();
                     loadCustomerTable();
-                    idField.setText(customerModel.generateNextCustomerId());
+                    idField.setText(customerBO.generateNextCustomerId());
 
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
@@ -110,7 +111,7 @@ public class CustomerViewController {
                 if (!id.matches(CUSTOMER_ID_REGEX)) {
                     new Alert(Alert.AlertType.ERROR, "Invalid ID").show();
                 } else {
-                    CustomerDTO customer = customerModel.searchCustomer(id);
+                    CustomerDTO customer = customerBO.searchCustomer(id);
 
                     if (customer != null) {
                         nameField.setText(customer.getName());
@@ -141,7 +142,7 @@ public class CustomerViewController {
                 new Alert(Alert.AlertType.ERROR, "Invalid contact number").show();
             } else {
                 CustomerDTO customer = new CustomerDTO(id, name, contact);
-                boolean result = customerModel.updateCustomer(customer);
+                boolean result = customerBO.updateCustomer(customer);
 
                 if (result) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
@@ -149,7 +150,7 @@ public class CustomerViewController {
                     loadCustomerTable();
 
                     try {
-                        idField.setText(customerModel.generateNextCustomerId());
+                        idField.setText(customerBO.generateNextCustomerId());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -171,7 +172,7 @@ public class CustomerViewController {
             if (!id.matches(CUSTOMER_ID_REGEX)) {
                 new Alert(Alert.AlertType.ERROR, "Invalid ID").show();
             } else {
-                boolean result = customerModel.deleteCustomer(id);
+                boolean result = customerBO.deleteCustomer(id);
 
                 if (result) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
@@ -179,7 +180,7 @@ public class CustomerViewController {
                     loadCustomerTable();
 
                     try {
-                        idField.setText(customerModel.generateNextCustomerId());
+                        idField.setText(customerBO.generateNextCustomerId());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -199,7 +200,7 @@ public class CustomerViewController {
         cleanFields();
 
         try {
-            idField.setText(customerModel.generateNextCustomerId());
+            idField.setText(customerBO.generateNextCustomerId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -215,7 +216,7 @@ public class CustomerViewController {
 
     private void loadCustomerTable() {
         try {
-            List<CustomerDTO> customerList = customerModel.getCustomers();
+            List<CustomerDTO> customerList = customerBO.getAllCustomers();
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
             obList.addAll(customerList);
             tblCustomer.setItems(obList);

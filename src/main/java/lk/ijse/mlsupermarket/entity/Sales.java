@@ -3,17 +3,27 @@ package lk.ijse.mlsupermarket.entity;
 public class Sales {
 
     private String saleId;
+    private String productId;
     private double totalAmount;
     private String saleDate;
     private String customerId;
 
     public Sales() {}
 
-    public Sales(String saleId, double totalAmount, String saleDate, String customerId) {
+    public Sales(String saleId,String productId , double totalAmount, String saleDate, String customerId) {
         this.saleId = saleId;
+        this.productId = productId;
         this.totalAmount = totalAmount;
         this.saleDate = saleDate;
         this.customerId = customerId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductId() {
+        return productId;
     }
 
     public String getSaleId() {

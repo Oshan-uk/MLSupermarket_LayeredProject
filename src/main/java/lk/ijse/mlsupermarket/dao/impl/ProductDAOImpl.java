@@ -89,7 +89,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
 
-    public String generateId() throws Exception {
+    public String generateNextId() throws Exception {
 
         Connection con = DBConnection.getInstance().getConnection();
 

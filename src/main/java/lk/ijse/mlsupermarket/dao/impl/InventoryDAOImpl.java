@@ -29,7 +29,7 @@ public class InventoryDAOImpl implements InventoryDAO {
     }
 
     @Override
-    public String generateId() throws Exception {
+    public String generateNextId() throws Exception {
         return "";
     }
 

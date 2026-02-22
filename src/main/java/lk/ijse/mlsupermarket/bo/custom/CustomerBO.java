@@ -2,18 +2,25 @@ package lk.ijse.mlsupermarket.bo.custom;
 
 import lk.ijse.mlsupermarket.bo.SuperBO;
 import lk.ijse.mlsupermarket.dao.SuperDAO;
+import lk.ijse.mlsupermarket.dto.CustomerDTO;
 import lk.ijse.mlsupermarket.entity.Customer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface CustomerBO  extends SuperBO {
 
 
-    String generateId() throws Exception;
-    boolean save(Customer customer) throws Exception;
-    Customer search(String id) throws Exception;
-    boolean update(Customer customer) throws Exception;
-    boolean delete(String id) throws Exception;
-    ArrayList<Customer> getAll() throws Exception;
+    boolean saveCustomer(CustomerDTO dto) throws Exception;
+
+    boolean updateCustomer(CustomerDTO dto) throws Exception;
+
+    boolean deleteCustomer(String id) throws Exception;
+
+    CustomerDTO searchCustomer(String id) throws Exception;
+
+    List<CustomerDTO> getAllCustomers() throws Exception;
+
+    String generateNextCustomerId() throws Exception;
 
 }

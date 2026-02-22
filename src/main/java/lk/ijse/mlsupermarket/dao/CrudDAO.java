@@ -1,6 +1,6 @@
 package lk.ijse.mlsupermarket.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface CrudDAO<T> extends SuperDAO {
 
@@ -10,9 +10,9 @@ public interface CrudDAO<T> extends SuperDAO {
 
     boolean delete(String id) throws Exception;
 
-    String generateId() throws Exception;
+    String generateNextId() throws Exception;
 
     T search(String id) throws Exception;
 
-    ArrayList<T> getAll() throws Exception;
+    List<T> getAll() throws Exception;
 }

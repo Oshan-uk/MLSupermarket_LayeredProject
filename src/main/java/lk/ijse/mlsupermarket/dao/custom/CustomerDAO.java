@@ -5,4 +5,6 @@ import lk.ijse.mlsupermarket.entity.Customer;
 
 public interface CustomerDAO extends CrudDAO<Customer> {
 
+    String generateNextId() throws Exception;
+
 }

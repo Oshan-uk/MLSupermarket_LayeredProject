@@ -2,13 +2,10 @@ package lk.ijse.mlsupermarket.bo.impl;
 
 import lk.ijse.mlsupermarket.bo.custom.ProductBO;
 import lk.ijse.mlsupermarket.dao.DAOFactory;
-import lk.ijse.mlsupermarket.dao.custom.CustomerDAO;
 import lk.ijse.mlsupermarket.dao.custom.ProductDAO;
-import lk.ijse.mlsupermarket.entity.Customer;
 import lk.ijse.mlsupermarket.entity.Product;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class ProductBOImpl implements ProductBO {
 
@@ -17,7 +14,7 @@ public class ProductBOImpl implements ProductBO {
 
     @Override
     public String generateId() throws Exception {
-        return productDAO.generateId();
+        return productDAO.generateNextId();
     }
 
     @Override
